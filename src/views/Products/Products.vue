@@ -6,7 +6,13 @@
           Front End Challenge
         </h1>
 
-        <div class="products-page-dw"></div>
+        <div class="products-page__filtration">
+          Todo: Filtration component here
+        </div>
+
+        <div class="products-page__sorting">
+          Todo: Sort component here
+        </div>
       </header>
     </div>
     
