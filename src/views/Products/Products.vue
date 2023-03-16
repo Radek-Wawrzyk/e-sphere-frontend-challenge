@@ -5,10 +5,8 @@
         <h1 class="products-page__header-title">
           Front End Challenge
         </h1>
-
-        <div class="products-page__filtration">
-          Todo: Filtration component here
-        </div>
+        
+        <products-filtration />
 
         <div class="products-page__sorting">
           Todo: Sort component here
@@ -23,18 +21,22 @@
 import { defineComponent, onMounted } from 'vue';
 import { productsService } from '@/api/services/products';
 
+import ProductsFiltration from '@/components/Product/ProductsFiltration/ProductsFiltration.vue';
+import { useProducts } from '@/composables/useProducts';
+
 export default defineComponent({
   name: 'ProductsView',
+  components: {
+    ProductsFiltration,
+  },
   setup() {
-    onMounted(() => {
-      productsService.getAllCategories().then((response) => {
-        console.log(response);
-      })
-    })
-  }
+    const { fetchInitialData } = useProducts();
+
+    onMounted(async () => {
+      await fetchInitialData();
+    });
+  },
 })
 </script>
 
-<style scoped>
-
-</style>
+<style lang="scss" scoped src="./Products.scss" />

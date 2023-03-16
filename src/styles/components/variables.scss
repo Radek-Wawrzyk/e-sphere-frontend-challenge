@@ -1,5 +1,6 @@
 html {
   --primary-color: #0090FF;
+  --primary-color--light: #0091ff23;
 
   --text-color: #707070;
   --text-color--dark: #000000;
@@ -11,4 +12,8 @@ html {
   --ui-background-color: #FFFFFF;
   --ui-background-color--medium: #EEEEEE;
   --ui-background-color--dark: #555555;
+
+  --ui-border-radius: 6px;
+
+  --ui-timing: 0.2s;
 }

@@ -1,0 +1,16 @@
+.products-filtration {
+  position: relative;
+  display: flex;
+
+  &__search {
+    width: 100%;
+    max-width: 385px;
+    margin: 0 30px 0 0;
+  }
+
+  &__category {
+    width: 195px;
+  }
+}
+
+// 

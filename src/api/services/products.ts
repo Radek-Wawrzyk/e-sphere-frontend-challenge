@@ -14,7 +14,7 @@ const productsService = {
     return httpInstance.get<ApiProductsResponse>(`/products/category/${category}`)
   },
   getAllCategories: () => {
-    return httpInstance.get<{ data: string[] }>('/products/categories/');
+    return httpInstance.get('/products/categories/');
   },
   getAllBySearchQuery: (searchQuery: string) => {
     return httpInstance.get<ApiProductsResponse>('/products/search', {

@@ -2,6 +2,13 @@
   position: relative;
 
   &__header {
+    position: relative;
     margin: 0 0 40px 0;
+
+    &-title {
+      margin: 0 0 40px 0;
+      font-size: 1.6875rem;
+      font-weight: bold;
+    }
   }
 }
