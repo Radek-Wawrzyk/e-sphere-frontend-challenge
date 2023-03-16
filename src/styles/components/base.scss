@@ -6,3 +6,21 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+.container {
+  padding: 0 2rem;
+  width: 100%;
+  max-width: 1720px;
+}
+
+.app {
+  padding: 52px 0;
+}
+
+// Media
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+}

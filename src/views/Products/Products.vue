@@ -1,6 +1,15 @@
 <template>
-  <div>
-    products
+  <div class="products-page">
+    <div class="container">
+      <header class="products-page__header">
+        <h1 class="products-page__header-title">
+          Front End Challenge
+        </h1>
+
+        <div class="products-page-dw"></div>
+      </header>
+    </div>
+    
   </div>
 </template>
 
