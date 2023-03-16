@@ -9,7 +9,7 @@
     />
 
     <app-select 
-      v-model="selectedCategory" 
+      v-model="category" 
       label="Category:" 
       :options="getCategories"
       title="Select a product category" 
@@ -20,8 +20,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import { useProducts } from '@/composables/useProducts';
+import debounce from 'lodash.debounce';
 
 import AppInput from '@/components/App/AppInput/AppInput.vue';
 import AppSelect from '@/components/App/AppSelect/AppSelect.vue';
@@ -34,13 +35,25 @@ export default defineComponent({
   },
   props: {},
   setup () {
-    const { getCategories } = useProducts();
+    const { getCategories, selectCategory, searchByQuery } = useProducts();
     const searchQuery = ref('');
-    const selectedCategory = ref('');
+    const category = ref('');
+
+    watch(category, () => {
+      selectCategory(category.value);
+    });
+
+    watch(searchQuery, () => {
+      search();
+    });
+
+    const search = debounce(() => {
+      searchByQuery(searchQuery.value);
+    }, 500);
     
     return {
       searchQuery,
-      selectedCategory,
+      category,
       getCategories,
     };
   },

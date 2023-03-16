@@ -6,6 +6,11 @@ const state = reactive({
   products: <Product[]>[],
   categories: <string[]>[],
   activeCategory: '',
+  meta: {
+    limit: 10,
+    skip: 0,
+    total: 0,
+  },
 });
 
 const useProducts = () => {
@@ -27,6 +32,15 @@ const useProducts = () => {
     }
   };
 
+  const fetchProductsByCategory = async () => {
+    try {
+      const { data } = await productsService.getAllByCategory(state.activeCategory);
+      setProducts(data.products);
+    } catch (err) {
+      throw new Error('Error');
+    }
+  };
+
   const fetchInitialData = async () => {
     const [categories, products] = await Promise.all([fetchProductCategories(), fetchProducts()]);
 
@@ -41,13 +55,33 @@ const useProducts = () => {
     state.categories = categories;
   };
 
+  const selectCategory = (category: string) => {
+    state.activeCategory = category;
+
+    if (category) fetchProductsByCategory();
+    else fetchProducts();
+  };
+
+  const searchByQuery = async (query: string) => {
+    try {
+      const { data } = await productsService.getAllBySearchQuery(query);
+      setProducts(data.products);
+    } catch (err) {
+      throw new Error('Error');
+    } 
+  };
+
   const getProducts = computed(() => state.products);
   const getCategories = computed(() => state.categories);
+  const getActiveCategory = computed(() => state.activeCategory);
 
   return {
     fetchInitialData,
     getProducts,
+    selectCategory,
     getCategories,
+    getActiveCategory,
+    searchByQuery,
   };
 };
 

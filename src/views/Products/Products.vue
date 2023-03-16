@@ -19,7 +19,6 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
-import { productsService } from '@/api/services/products';
 
 import ProductsFiltration from '@/components/Product/ProductsFiltration/ProductsFiltration.vue';
 import { useProducts } from '@/composables/useProducts';
