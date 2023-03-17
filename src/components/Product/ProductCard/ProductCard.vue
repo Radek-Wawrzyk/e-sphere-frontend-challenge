@@ -5,13 +5,15 @@
     </figure>
 
     <div class="product-card__content">
-      <h3 class="product-card__name">
-        {{ name }}
-      </h3>
+      <div class="product-card__details">
+        <h3 class="product-card__name">
+          {{ name }}
+        </h3>
 
-      <p class="product-card__description">
-        {{ description }}
-      </p>
+        <p class="product-card__description">
+          {{ description }}
+        </p>
+      </div>
 
       <div class="product-card__info">
         <product-price

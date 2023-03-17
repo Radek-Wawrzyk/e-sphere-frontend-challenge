@@ -5,8 +5,9 @@ import { computed, reactive } from 'vue';
 const state = reactive({
   products: <Product[]>[],
   categories: <string[]>[],
+  isLoading: false,
   activeCategory: '',
-  meta: {
+  paginationMeta: {
     limit: 10,
     skip: 0,
     total: 0,
@@ -75,6 +76,7 @@ const useProducts = () => {
   const getCategories = computed(() => state.categories);
   const getActiveCategory = computed(() => state.activeCategory);
   const hasProducts = computed(() => !!state.products.length);
+  const isLoading = computed(() => state.isLoading);
 
   return {
     fetchInitialData,
@@ -84,6 +86,7 @@ const useProducts = () => {
     getActiveCategory,
     searchByQuery,
     hasProducts,
+    isLoading,
   };
 };
 
