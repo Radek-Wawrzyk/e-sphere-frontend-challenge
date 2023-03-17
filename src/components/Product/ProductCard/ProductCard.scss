@@ -38,8 +38,9 @@
 
   &__info {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     align-self: flex-end;
+    justify-content: space-between;
     margin: 13px 0 0 0;
     gap: 1rem;
   }

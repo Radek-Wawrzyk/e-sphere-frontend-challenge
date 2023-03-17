@@ -1,0 +1,8 @@
+.product-rating {
+  position: relative;
+
+  &__list {
+    display: flex;
+    gap: 0.25rem;
+  }
+}

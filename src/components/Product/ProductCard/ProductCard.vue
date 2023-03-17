@@ -21,6 +21,8 @@
           :price="price" 
           :discount-percentage="discountPercentage"
         />
+      
+        <product-rating :rating="rating" :max-rating="5" />
       </div>
     </div>
   </li>
@@ -30,13 +32,13 @@
 import { defineComponent, PropType } from 'vue';
 
 import ProductPrice from '../ProductPrice/ProductPrice.vue';
-// import AppRating from '@/components/App/AppRating/AppRating.vue';
+import ProductRating from '@/components/Product/ProductRating/ProductRating.vue';
 
 export default defineComponent({
   name: 'ProductCard',
   components: {
     ProductPrice,
-    // AppRating,
+    ProductRating,
   },
   props: {
     name: {

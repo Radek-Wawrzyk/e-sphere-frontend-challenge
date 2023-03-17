@@ -1,0 +1,9 @@
+.product-rating-star {
+  position: relative;
+
+  &__inner {
+    width: 16px;
+    height: 16px;
+    stroke: var(--primary-color);
+  }
+}
