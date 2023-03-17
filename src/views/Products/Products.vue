@@ -13,7 +13,8 @@
         </div>
       </header>
 
-      <products-listing />
+      <products-listing class="products-page__listing" />
+      <app-select class="products-page__select" :options="productsPerPage" />
     </div>
   </div>
 </template>
@@ -21,15 +22,18 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
 import { useProducts } from '@/composables/useProducts';
+import { PRODUCTS_PER_PAGE } from '@/types/constants/Product';
 
 import ProductsFiltration from '@/components/Product/ProductsFiltration/ProductsFiltration.vue';
 import ProductsListing from '@/components/Product/ProductsListing/ProductsListing.vue';
+import AppSelect from '@/components/App/AppSelect/AppSelect.vue';
 
 export default defineComponent({
   name: 'ProductsView',
   components: {
     ProductsFiltration,
     ProductsListing,
+    AppSelect,
   },
   setup() {
     const { fetchInitialData } = useProducts();
@@ -37,6 +41,12 @@ export default defineComponent({
     onMounted(async () => {
       await fetchInitialData();
     });
+
+    const productsPerPage = PRODUCTS_PER_PAGE;
+
+    return {
+      productsPerPage,
+    };
   },
 })
 </script>
