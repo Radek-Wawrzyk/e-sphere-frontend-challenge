@@ -12,21 +12,24 @@
           Todo: Sort component here
         </div>
       </header>
+
+      <products-listing />
     </div>
-    
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
+import { useProducts } from '@/composables/useProducts';
 
 import ProductsFiltration from '@/components/Product/ProductsFiltration/ProductsFiltration.vue';
-import { useProducts } from '@/composables/useProducts';
+import ProductsListing from '@/components/Product/ProductsListing/ProductsListing.vue';
 
 export default defineComponent({
   name: 'ProductsView',
   components: {
     ProductsFiltration,
+    ProductsListing,
   },
   setup() {
     const { fetchInitialData } = useProducts();

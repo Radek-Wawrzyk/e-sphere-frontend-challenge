@@ -1,7 +1,7 @@
 <template>
-  <div class="app">
+  <main class="app">
     <router-view />
-  </div>
+  </main>
 </template>
 
 <script lang="ts">
@@ -11,4 +11,3 @@ export default defineComponent({
   name: 'App',
 });
 </script>
-

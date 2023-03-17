@@ -74,6 +74,7 @@ const useProducts = () => {
   const getProducts = computed(() => state.products);
   const getCategories = computed(() => state.categories);
   const getActiveCategory = computed(() => state.activeCategory);
+  const hasProducts = computed(() => !!state.products.length);
 
   return {
     fetchInitialData,
@@ -82,6 +83,7 @@ const useProducts = () => {
     getCategories,
     getActiveCategory,
     searchByQuery,
+    hasProducts,
   };
 };
 

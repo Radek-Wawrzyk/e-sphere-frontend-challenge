@@ -1,0 +1,21 @@
+.product-price {
+  position: relative;
+
+  &__original {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: bold;
+    color: var(--text-color--dark);
+
+    &--is-discounted {
+      text-decoration: line-through;
+    }
+  }
+
+  &__new {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+}
