@@ -2,7 +2,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -11,11 +12,12 @@ img {
   height: auto;
 }
 
-button, a {
+button,
+a {
   cursor: pointer;
 
   &:focus {
-    outline-color: var(--primary-color)   ;
+    outline-color: var(--primary-color);
   }
 
   &:disabled {

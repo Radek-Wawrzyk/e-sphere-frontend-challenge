@@ -1,7 +1,7 @@
 <template>
   <section class="products-listing">
     <ul v-if="hasProducts" class="products-listing__grid">
-      <product-card 
+      <product-card
         v-for="product in getProducts"
         :key="product.id"
         :name="product.title"
@@ -13,14 +13,12 @@
       />
     </ul>
 
-    <p v-else class="products-listing__empty">
-      No products...
-    </p>
+    <p v-else class="products-listing__empty">No products...</p>
   </section>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 import { useProducts } from '@/composables/useProducts';
 
 import ProductCard from '@/components/Product/ProductCard/ProductCard.vue';
@@ -30,7 +28,7 @@ export default defineComponent({
   components: {
     ProductCard,
   },
-  setup () {
+  setup() {
     const { getProducts, hasProducts } = useProducts();
 
     return {

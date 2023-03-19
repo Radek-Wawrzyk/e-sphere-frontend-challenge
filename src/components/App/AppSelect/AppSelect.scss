@@ -1,6 +1,6 @@
 .app-select {
   position: relative;
-  
+
   &__label {
     display: block;
     font-weight: 600;
@@ -15,7 +15,7 @@
     height: 40px;
     padding: 0 16px;
     border-radius: var(--ui-border-radius);
-    border: 1px solid var(--ui-border-color); 
+    border: 1px solid var(--ui-border-color);
     background-color: transparent;
     cursor: pointer;
     transition: opacity var(--ui-timing);
@@ -58,7 +58,7 @@
     padding: 0.5rem 0;
     background-color: var(--ui-background-color);
     z-index: 1;
-    border-radius :var(--ui-border-radius);
+    border-radius: var(--ui-border-radius);
     border: 1px solid var(--ui-border-color);
     height: auto;
     max-height: 280px;
@@ -67,7 +67,7 @@
 
   &__option {
     display: block;
-  
+
     &-button {
       cursor: pointer;
       width: 100%;
@@ -91,7 +91,7 @@
       }
 
       &:focus {
-        outline-color: var(--primary-color);    
+        outline-color: var(--primary-color);
       }
     }
   }

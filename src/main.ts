@@ -5,7 +5,4 @@ import FontAwesomeIcon from '@/plugins/font-awesome';
 
 import '@/styles/index.scss';
 
-createApp(App)
-  .use(router)
-  .component('font-awesome-icon', FontAwesomeIcon)
-  .mount('#app');
+createApp(App).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app');

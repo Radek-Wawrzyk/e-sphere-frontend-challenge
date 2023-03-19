@@ -9,13 +9,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "lib": ["ESNext", "DOM", "dom.iterable",  "es5", "es6"],
+    "lib": ["ESNext", "DOM", "dom.iterable", "es5", "es6"],
     "skipLibCheck": true,
     "noEmit": true,
     "types": ["lodash.debounce"],
     "paths": {
       "@/*": ["./src/*"]
-    },
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "*.vue", "*.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]

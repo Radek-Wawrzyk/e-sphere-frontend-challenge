@@ -1,4 +1,4 @@
-import { ProductsSortKey } from "../types/Product";
+import { ProductsSortKey } from '../types/Product';
 
 const PRODUCTS_PER_PAGE = ['10', '25', '50', '100'];
 const DEFAULT_PRODUCTS_PER_PAGE = 10;

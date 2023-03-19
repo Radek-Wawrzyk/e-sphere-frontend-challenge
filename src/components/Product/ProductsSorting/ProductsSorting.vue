@@ -1,13 +1,9 @@
 <template>
   <ul class="products-sorting">
-    <li 
-      class="products-sorting__item"
-      v-for="key in sortingKeys"
-      :key="key"
-    >
-      <button 
-        class="products-sorting__button" 
-        :class="{'products-sorting__button--is-active': isSortButtonActive(key)}"
+    <li v-for="key in sortingKeys" :key="key" class="products-sorting__item">
+      <button
+        class="products-sorting__button"
+        :class="{ 'products-sorting__button--is-active': isSortButtonActive(key) }"
         @click="toggleSort(key)"
       >
         {{ key }}
@@ -16,7 +12,7 @@
           v-if="isSortButtonActive(key)"
           icon="sort-down"
           class="products-sorting__button-icon"
-          :class="{'products-sorting__button-icon--is-asc' : isSortButtonAsc(key) }" 
+          :class="{ 'products-sorting__button-icon--is-asc': isSortButtonAsc(key) }"
         />
       </button>
     </li>
@@ -36,7 +32,7 @@ export default defineComponent({
     const activeSort = ref<ProductsSort>({ key: 'price', status: 'inactive' });
     const sortingKeys = computed(() => PRODUCTS_SORTING_KEYS);
 
-    const toggleSort = (key: ProductsSortKey) => {   
+    const toggleSort = (key: ProductsSortKey) => {
       if (activeSort.value.key === key) {
         if (activeSort.value.status === 'inactive') {
           activeSort.value.status = 'asc';
@@ -52,8 +48,10 @@ export default defineComponent({
       emit('on-sort-change', activeSort.value);
     };
 
-    const isSortButtonActive = (key: ProductsSortKey) => (key === activeSort.value.key && activeSort.value.status !== 'inactive')
-    const isSortButtonAsc = (key: ProductsSortKey) => (key === activeSort.value.key && activeSort.value.status === 'asc');
+    const isSortButtonActive = (key: ProductsSortKey) =>
+      key === activeSort.value.key && activeSort.value.status !== 'inactive';
+    const isSortButtonAsc = (key: ProductsSortKey) =>
+      key === activeSort.value.key && activeSort.value.status === 'asc';
 
     return {
       activeSort,
@@ -63,7 +61,7 @@ export default defineComponent({
       toggleSort,
     };
   },
-})
+});
 </script>
 
 <style lang="scss" src="./ProductsSorting.scss" />

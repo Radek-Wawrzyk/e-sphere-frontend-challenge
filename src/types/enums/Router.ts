@@ -1,9 +1,9 @@
 enum RouterNames {
-  Products = 'ProductsPage'
-};
+  Products = 'ProductsPage',
+}
 
 enum RouterPaths {
-  Products = '/'
+  Products = '/',
 }
 
 export { RouterNames, RouterPaths };

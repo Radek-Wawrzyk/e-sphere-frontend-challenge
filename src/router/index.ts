@@ -7,9 +7,10 @@ const router = createRouter({
     {
       name: RouterNames.Products,
       path: RouterPaths.Products,
-      component: () => import(/* webpackChunkName: "products-page" */ '@/views/Products/Products.vue'),
-    }
-  ]
+      component: () =>
+        import(/* webpackChunkName: "products-page" */ '@/views/Products/Products.vue'),
+    },
+  ],
 });
 
 export default router;

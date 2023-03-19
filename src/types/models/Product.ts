@@ -1,4 +1,4 @@
-import { ProductsSortKey, ProductsSortStatus } from "../types/Product";
+import { ProductsSortKey, ProductsSortStatus } from '../types/Product';
 
 interface Product {
   brand: string;

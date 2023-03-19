@@ -3,7 +3,8 @@
   align-items: center;
   gap: 16px;
 
-  &__prev, &__next {
+  &__prev,
+  &__next {
     border: none;
     background-color: transparent;
     padding: 0.25rem 0.5rem;

@@ -3,8 +3,11 @@
     <span v-if="hasDiscount" class="product-price__new">
       {{ priceAfterDiscount }}
     </span>
-  
-    <span class="product-price__original" :class="{'product-price__original--is-discounted' : hasDiscount}">
+
+    <span
+      class="product-price__original"
+      :class="{ 'product-price__original--is-discounted': hasDiscount }"
+    >
       {{ normalPrice }}
     </span>
   </div>
@@ -29,7 +32,9 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const priceAfterDiscount = computed(() => getFormattedPrice(props.price - (props.price * (props.discountPercentage / 100))));
+    const priceAfterDiscount = computed(() =>
+      getFormattedPrice(props.price - props.price * (props.discountPercentage / 100))
+    );
     const normalPrice = computed(() => getFormattedPrice(props.price));
     const hasDiscount = computed(() => props.discountPercentage > 0);
 
@@ -39,7 +44,7 @@ export default defineComponent({
       normalPrice,
     };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped src="./ProductPrice.scss" />

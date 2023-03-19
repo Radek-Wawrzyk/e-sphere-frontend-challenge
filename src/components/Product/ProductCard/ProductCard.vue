@@ -18,10 +18,10 @@
       <div class="product-card__info">
         <product-price
           class="product-card__info-price"
-          :price="price" 
+          :price="price"
           :discount-percentage="discountPercentage"
         />
-      
+
         <product-rating :rating="rating" :max-rating="5" />
       </div>
     </div>
@@ -66,12 +66,10 @@ export default defineComponent({
       required: true,
     },
   },
-  setup () {
-    
-
-    return {}
-  }
-})
+  setup() {
+    return {};
+  },
+});
 </script>
 
 <style lang="scss" scoped src="./ProductCard.scss" />

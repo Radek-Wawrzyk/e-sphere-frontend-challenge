@@ -2,35 +2,35 @@
   <div class="products-page">
     <div class="container">
       <header class="products-page__header">
-        <h1 class="products-page__header-title">
-          Front End Challenge
-        </h1>
-        
+        <h1 class="products-page__header-title">Front End Challenge</h1>
+
         <products-filtration class="products-page__header-filters" />
         <hr class="products-page__header-line" />
 
         <div class="products-page__sorting">
-          <products-sorting class="products-page__sorting-actions" @on-sort-change="changeSorting" />
-          <span class="products-page__sorting-info" v-if="hasProducts">
+          <products-sorting
+            class="products-page__sorting-actions"
+            @on-sort-change="changeSorting"
+          />
+          <span v-if="hasProducts" class="products-page__sorting-info">
             {{ resultsText }}
           </span>
         </div>
-        
       </header>
 
       <products-listing class="products-page__listing" />
 
       <footer class="products-page__bottom">
-        <app-select 
-          class="products-page__bottom-select" 
+        <app-select
+          class="products-page__bottom-select"
           :options="productsPerPage"
           :model-value="`${getPaginationMeta.limit}`"
           @update:model-value="changePageSize($event)"
         />
 
         <div class="products-page__bottom-pagination-wrapper">
-          <app-pagination 
-            class="products-page__bottom-pagination" 
+          <app-pagination
+            class="products-page__bottom-pagination"
             :skip="getPaginationMeta.skip"
             :limit="getPaginationMeta.limit"
             :total="getPaginationMeta.total"
@@ -63,9 +63,9 @@ export default defineComponent({
     AppPagination,
   },
   setup() {
-    const { 
-      fetchInitialData, 
-      getPaginationMeta, 
+    const {
+      fetchInitialData,
+      getPaginationMeta,
       changePage,
       getProductsInfo,
       hasProducts,
@@ -73,9 +73,11 @@ export default defineComponent({
       changeSorting,
     } = useProducts();
 
-    const resultsText = computed(() => `${getProductsInfo.value.current} of ${getProductsInfo.value.total} results`);
+    const resultsText = computed(
+      () => `${getProductsInfo.value.current} of ${getProductsInfo.value.total} results`
+    );
     const productsPerPage = PRODUCTS_PER_PAGE;
-  
+
     onMounted(async () => {
       await fetchInitialData();
     });
@@ -91,7 +93,7 @@ export default defineComponent({
       changePage,
     };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped src="./Products.scss" />

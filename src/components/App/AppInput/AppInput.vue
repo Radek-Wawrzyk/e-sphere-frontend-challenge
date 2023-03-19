@@ -1,9 +1,9 @@
 <template>
   <div class="app-input">
-    <label class="app-input__label" :for="name" v-if="label">{{ label }}</label>
+    <label v-if="label" class="app-input__label" :for="name">{{ label }}</label>
     <input
-      class="app-input__inner"
       :id="name"
+      class="app-input__inner"
       :title="title"
       :aria-label="title"
       :value="modelValue"
@@ -20,7 +20,6 @@ import { generateUuid } from '@/helpers/';
 
 export default defineComponent({
   name: 'AppInput',
-  emits: ['onBlur', 'update:modelValue'],
   props: {
     modelValue: {
       type: [String, Number] as PropType<string | number>,
@@ -45,9 +44,10 @@ export default defineComponent({
     name: {
       type: String as PropType<string>,
       required: false,
-      defalt: () => `input-${generateUuid()}`
+      default: () => `input-${generateUuid()}`,
     },
   },
+  emits: ['onBlur', 'update:modelValue'],
   setup(_, { emit }) {
     const handleInput = (event: Event) => {
       emit('update:modelValue', (event.target as HTMLInputElement).value);
@@ -62,7 +62,7 @@ export default defineComponent({
       handleBlur,
     };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped src="./AppInput.scss" />

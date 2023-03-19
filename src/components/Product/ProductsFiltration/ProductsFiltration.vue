@@ -1,18 +1,18 @@
 <template>
   <div class="products-filtration">
-    <app-input 
-      v-model="searchQuery" 
-      label="Search:" 
-      title="Search any product" 
+    <app-input
+      v-model="searchQuery"
+      label="Search:"
+      title="Search any product"
       placeholder="What are you looking for?"
-      class="products-filtration__search" 
+      class="products-filtration__search"
     />
 
-    <app-select 
-      v-model="category" 
-      label="Category:" 
+    <app-select
+      v-model="category"
+      label="Category:"
       :options="getCategories"
-      title="Select a product category" 
+      title="Select a product category"
       placeholder="Select category"
       class="products-filtration__category"
     />
@@ -33,7 +33,7 @@ export default defineComponent({
     AppInput,
     AppSelect,
   },
-  setup () {
+  setup() {
     const { getCategories, selectCategory, searchByQuery } = useProducts();
     const searchQuery = ref('');
     const category = ref('');
@@ -49,14 +49,14 @@ export default defineComponent({
     const search = debounce(() => {
       searchByQuery(searchQuery.value);
     }, 500);
-    
+
     return {
       searchQuery,
       category,
       getCategories,
     };
   },
-})
+});
 </script>
 
 <style lang="scss" scoped src="./ProductsFiltration.scss" />

@@ -37,8 +37,8 @@ const useProducts = () => {
 
   const fetchProducts = async (): Promise<Product[]> => {
     try {
-      const { data } = await productsService.getAll({ 
-        limit: getPaginationMeta.value.limit, 
+      const { data } = await productsService.getAll({
+        limit: getPaginationMeta.value.limit,
         skip: getPaginationMeta.value.skip,
       });
 
@@ -67,7 +67,7 @@ const useProducts = () => {
     setProducts(products);
   };
 
-  const setProducts = (products: Product[], clone: boolean = true) => {
+  const setProducts = (products: Product[], clone = true) => {
     if (clone) state.productsCopy = products;
     state.products = products;
   };
@@ -101,11 +101,12 @@ const useProducts = () => {
       return;
     }
 
-    // @ts-ignore: 
+    // @ts-ignore:
     const productsToSort = [...getProducts.value].sort((a, b) => {
       if (sortPayload.status === 'asc') return a[sortPayload.key] > b[sortPayload.key] ? 1 : -1;
-      else if (sortPayload.status === 'desc') return a[sortPayload.key] < b[sortPayload.key] ? 1 : -1;
-      else 0
+      else if (sortPayload.status === 'desc')
+        return a[sortPayload.key] < b[sortPayload.key] ? 1 : -1;
+      else 0;
     });
 
     setProducts(productsToSort, false);
@@ -117,7 +118,7 @@ const useProducts = () => {
       setProducts(data.products);
     } catch (err) {
       throw new Error('Error');
-    } 
+    }
   };
 
   const setPaginationMetaFromRoute = () => {
@@ -135,7 +136,7 @@ const useProducts = () => {
       path: route.path,
       query: {
         ...route.query,
-        ...getPaginationMeta.value
+        ...getPaginationMeta.value,
       },
     });
   };

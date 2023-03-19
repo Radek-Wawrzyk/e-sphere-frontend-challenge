@@ -4,6 +4,6 @@ enum ProductsPageSizeOptions {
   Medium = '50',
   Large = '75',
   Largest = '100',
-};
+}
 
 export { ProductsPageSizeOptions };

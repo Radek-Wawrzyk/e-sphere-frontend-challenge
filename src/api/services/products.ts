@@ -7,11 +7,11 @@ const productsService = {
       params: {
         limit: meta.limit,
         skip: meta.skip,
-      }
+      },
     });
   },
   getAllByCategory: (category: string) => {
-    return httpInstance.get<ApiProductsResponse>(`/products/category/${category}`)
+    return httpInstance.get<ApiProductsResponse>(`/products/category/${category}`);
   },
   getAllCategories: () => {
     return httpInstance.get('/products/categories/');
@@ -23,6 +23,6 @@ const productsService = {
       },
     });
   },
-}; 
+};
 
 export { productsService };

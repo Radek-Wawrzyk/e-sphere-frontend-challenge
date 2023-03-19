@@ -3,8 +3,8 @@
     <ul class="product-rating__list">
       <product-rating-star
         v-for="index in maxRating"
-        class="product-rating__star"
         :key="`star-${index}`"
+        class="product-rating__star"
         :is-filled="isFilled(index, finalRating)"
       />
     </ul>
@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts">
-import { computed } from '@vue/reactivity';
-import { defineComponent, PropType } from 'vue'
+import { computed } from 'vue';
+import { defineComponent, PropType } from 'vue';
 
 import ProductRatingStar from '@/components/Product/ProductRatingStar/ProductRatingStar.vue';
 
@@ -42,7 +42,7 @@ export default defineComponent({
       else if (props.rating < 0) return 0;
       else if (props.rating > props.maxRating && props.maxRating > 0) return props.maxRating;
       else if (props.maxRating <= 0) return 0;
-  
+
       return props.rating;
     });
 
