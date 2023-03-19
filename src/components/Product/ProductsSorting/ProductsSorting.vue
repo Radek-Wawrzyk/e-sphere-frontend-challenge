@@ -23,13 +23,13 @@
 import { computed, defineComponent, ref } from 'vue';
 import type { ProductsSort } from '@/types/models/Product';
 import type { ProductsSortKey } from '@/types/types/Product';
-import { PRODUCTS_SORTING_KEYS } from '@/types/constants/Product';
+import { PRODUCTS_DEFAULT_SORT_META, PRODUCTS_SORTING_KEYS } from '@/types/constants/Product';
 
 export default defineComponent({
   name: 'ProductsSorting',
   emits: ['on-sort-change'],
   setup(_, { emit }) {
-    const activeSort = ref<ProductsSort>({ key: 'price', status: 'inactive' });
+    const activeSort = ref<ProductsSort>(PRODUCTS_DEFAULT_SORT_META);
     const sortingKeys = computed(() => PRODUCTS_SORTING_KEYS);
 
     const toggleSort = (key: ProductsSortKey) => {

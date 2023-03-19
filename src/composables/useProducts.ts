@@ -4,7 +4,7 @@ import {
   PRODUCTS_DEFAULT_SORT_META,
 } from '@/types/constants/Product';
 import { Product, ProductsSort, ProductPaginationMeta } from '@/types/models/Product';
-import { computed, reactive, watch } from 'vue';
+import { computed, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getPriceAfterDiscount } from '@/helpers';
 
@@ -72,46 +72,29 @@ const useProducts = () => {
     state.categories = categories;
   };
   const setPaginationMeta = (meta: ProductPaginationMeta) => {
-    state.paginationMeta = {
-      ...meta,
-      limit: meta.limit <= 10 ? 10 : meta.limit,
-    };
+    state.paginationMeta = meta;
+    syncMetaWithRouter();
   };
 
-  const changeCategory = (category: string) => {
+  const setCategory = (category: string) => {
     state.activeCategory = category;
 
     if (category) fetchProductsByCategory();
     else fetchProducts();
   };
 
-  const changePage = async (skip: number) => {
+  const setPage = async (skip: number) => {
     setPaginationMeta({ ...getPaginationMeta.value, skip });
     setProducts(await fetchProducts());
   };
 
-  const changePageSize = async (limit: string) => {
+  const setPageSize = async (limit: string) => {
     setPaginationMeta({ ...getPaginationMeta.value, limit: Number(limit) });
     setProducts(await fetchProducts());
   };
 
-  const changeSorting = (sortPayload: ProductsSort) => {
-    // if (sortPayload.status === 'inactive') {
-    //   setProducts(state.productsCopy);
-    //   return;
-    // }
-
+  const setSorting = (sortPayload: ProductsSort) => {
     state.sortingMeta = sortPayload;
-
-    // // @ts-ignore:
-    // const productsToSort = [...getProducts.value].sort((a, b) => {
-    //   if (sortPayload.status === 'asc') return a[sortPayload.key] > b[sortPayload.key] ? 1 : -1;
-    //   else if (sortPayload.status === 'desc')
-    //     return a[sortPayload.key] < b[sortPayload.key] ? 1 : -1;
-    //   else 0;
-    // });
-
-    // setProducts(productsToSort, false);
   };
 
   const searchByQuery = async (query: string) => {
@@ -146,6 +129,9 @@ const useProducts = () => {
     });
   };
 
+  const hasMorePages = computed(
+    () => getPaginationMeta.value.total / getPaginationMeta.value.limit > 1
+  );
   const hasProducts = computed(() => !!state.products.length);
   const isLoading = computed(() => state.isLoading);
 
@@ -184,23 +170,20 @@ const useProducts = () => {
     });
   });
 
-  watch(getPaginationMeta, () => {
-    syncMetaWithRouter();
-  });
-
   return {
-    fetchInitialData,
-    changePage,
-    changePageSize,
-    changeSorting,
-    changeCategory,
+    setPage,
+    setPageSize,
+    setSorting,
+    setCategory,
     getProducts,
     getCategories,
     getActiveCategory,
     getPaginationMeta,
     getProductsInfo,
-    searchByQuery,
     hasProducts,
+    hasMorePages,
+    fetchInitialData,
+    searchByQuery,
     isLoading,
   };
 };
