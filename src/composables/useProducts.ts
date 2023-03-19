@@ -7,6 +7,8 @@ import { Product, ProductsSort, ProductPaginationMeta } from '@/types/models/Pro
 import { computed, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getPriceAfterDiscount } from '@/helpers';
+import { ApiProductsResponse } from '@/types/models/Api';
+import { AxiosResponse } from 'axios';
 
 const state = reactive({
   products: <Product[]>[],
@@ -68,19 +70,25 @@ const useProducts = () => {
     if (clone) state.productsCopy = products;
     state.products = products;
   };
+
   const setCategories = (categories: string[]) => {
     state.categories = categories;
   };
+
   const setPaginationMeta = (meta: ProductPaginationMeta) => {
     state.paginationMeta = meta;
     syncMetaWithRouter();
   };
 
-  const setCategory = (category: string) => {
-    state.activeCategory = category;
+  const setCategory = async (category: string) => {
+    if (category.length) {
+      state.activeCategory = category;
+      fetchProductsByCategory();
+      return;
+    }
 
-    if (category) fetchProductsByCategory();
-    else fetchProducts();
+    setPaginationMeta(PRODUCTS_DEFAULT_PAGINATION_META);
+    setProducts(await fetchProducts());
   };
 
   const setPage = async (skip: number) => {
@@ -99,7 +107,11 @@ const useProducts = () => {
 
   const searchByQuery = async (query: string) => {
     try {
-      const { data } = await productsService.getAllBySearchQuery(query);
+      let response: AxiosResponse<ApiProductsResponse>;
+
+      if (query.length) response = await productsService.getAllBySearchQuery(query);
+      else response = await productsService.getAll(PRODUCTS_DEFAULT_PAGINATION_META);
+      const { data } = response;
 
       setPaginationMeta({ limit: data.limit, total: data.total, skip: data.skip });
       setProducts(data.products);

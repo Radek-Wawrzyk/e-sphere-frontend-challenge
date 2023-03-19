@@ -26,7 +26,7 @@
           @update:model-value="setPageSize($event)"
         />
 
-        <div class="products-page__bottom-pagination-wrapper">
+        <div v-if="hasProducts" class="products-page__bottom-pagination-wrapper">
           <app-pagination
             class="products-page__bottom-pagination"
             :skip="getPaginationMeta.skip"
