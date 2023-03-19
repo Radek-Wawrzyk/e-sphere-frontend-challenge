@@ -10,7 +10,7 @@
         <hr class="products-page__header-line" />
 
         <div class="products-page__sorting">
-          <products-sorting class="products-page__sorting-actions" />
+          <products-sorting class="products-page__sorting-actions" @on-sort-change="changeSorting" />
           <span class="products-page__sorting-info" v-if="hasProducts">
             {{ resultsText }}
           </span>
@@ -24,6 +24,8 @@
         <app-select 
           class="products-page__bottom-select" 
           :options="productsPerPage"
+          :model-value="`${getPaginationMeta.limit}`"
+          @update:model-value="changePageSize($event)"
         />
 
         <div class="products-page__bottom-pagination-wrapper">
@@ -67,9 +69,11 @@ export default defineComponent({
       changePage,
       getProductsInfo,
       hasProducts,
+      changePageSize,
+      changeSorting,
     } = useProducts();
 
-    const resultsText = computed(() => `${getProductsInfo.value.current} of ${getProductsInfo.value.total}`);
+    const resultsText = computed(() => `${getProductsInfo.value.current} of ${getProductsInfo.value.total} results`);
     const productsPerPage = PRODUCTS_PER_PAGE;
   
     onMounted(async () => {
@@ -78,11 +82,13 @@ export default defineComponent({
 
     return {
       productsPerPage,
-      getPaginationMeta,
-      changePage,
-      getProductsInfo,
       resultsText,
       hasProducts,
+      getPaginationMeta,
+      getProductsInfo,
+      changePageSize,
+      changeSorting,
+      changePage,
     };
   },
 })

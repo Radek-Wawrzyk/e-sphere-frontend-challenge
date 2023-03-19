@@ -1,0 +1,40 @@
+.products-sorting {
+  position: relative;
+  display: flex;
+  gap: 10px;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    height: 30px;
+    padding: 0 12px;
+    width: 80px;
+    border-radius: var(--ui-border-radius);
+    border: none;
+    background-color: var(--ui-background-color--medium);
+    color: var(--text-color--dark);
+    transition: all var(--ui-timing);
+
+    &-icon {
+      width: 12px;
+      margin: -4px 0 0 4px;
+      transform-origin: 50% 70%;
+      transition: transform var(--ui-timing);
+
+      &--is-asc {
+        transform: rotate(180deg);
+      }
+
+      path {
+        color: var(--text-color--accent);
+      }
+    }
+
+    &--is-active {
+      color: var(--text-color--accent);
+      background-color: var(--primary-color);
+    }
+  }
+}

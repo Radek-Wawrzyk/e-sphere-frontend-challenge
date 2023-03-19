@@ -1,3 +1,5 @@
+import { ProductsSortKey, ProductsSortStatus } from "../types/Product";
+
 interface Product {
   brand: string;
   category: string;
@@ -12,4 +14,9 @@ interface Product {
   title: string;
 }
 
-export type { Product };
+interface ProductsSort {
+  key: ProductsSortKey;
+  status: ProductsSortStatus;
+}
+
+export type { Product, ProductsSort };

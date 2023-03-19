@@ -1,21 +1,31 @@
 import { productsService } from '@/api/services/products';
 import { DEFAULT_PRODUCTS_PER_PAGE } from '@/types/constants/Product';
-import { Product } from '@/types/models/Product';
+import { ApiResponseMeta } from '@/types/models/Api';
+import { Product, ProductsSort } from '@/types/models/Product';
 import { computed, reactive, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const state = reactive({
   products: <Product[]>[],
+  productsCopy: <Product[]>[],
   categories: <string[]>[],
   isLoading: false,
   activeCategory: '',
-  paginationMeta: {
+  paginationMeta: <ApiResponseMeta>{
     limit: DEFAULT_PRODUCTS_PER_PAGE,
     skip: 0,
     total: 0,
   },
+  sortingMeta: <ProductsSort>{
+    key: 'price',
+    status: 'inactive',
+  },
 });
 
 const useProducts = () => {
+  const router = useRouter();
+  const route = useRoute();
+
   const fetchProductCategories = async (): Promise<string[]> => {
     try {
       const response = await productsService.getAllCategories();
@@ -50,22 +60,22 @@ const useProducts = () => {
   };
 
   const fetchInitialData = async () => {
+    setPaginationMetaFromRoute();
     const [categories, products] = await Promise.all([fetchProductCategories(), fetchProducts()]);
 
     setCategories(categories);
     setProducts(products);
   };
 
-  const setProducts = (products: Product[]) => {
+  const setProducts = (products: Product[], clone: boolean = true) => {
+    if (clone) state.productsCopy = products;
     state.products = products;
   };
   const setCategories = (categories: string[]) => {
     state.categories = categories;
   };
-  const setPaginationMeta = (meta: any) => {
+  const setPaginationMeta = (meta: ApiResponseMeta) => {
     state.paginationMeta = meta;
-
-    console.log()
   };
 
   const selectCategory = (category: string) => {
@@ -80,6 +90,27 @@ const useProducts = () => {
     setProducts(await fetchProducts());
   };
 
+  const changePageSize = async (limit: string) => {
+    setPaginationMeta({ ...getPaginationMeta.value, limit: Number(limit) });
+    setProducts(await fetchProducts());
+  };
+
+  const changeSorting = (sortPayload: ProductsSort) => {
+    if (sortPayload.status === 'inactive') {
+      setProducts(state.productsCopy);
+      return;
+    }
+
+    // @ts-ignore: 
+    const productsToSort = [...getProducts.value].sort((a, b) => {
+      if (sortPayload.status === 'asc') return a[sortPayload.key] > b[sortPayload.key] ? 1 : -1;
+      else if (sortPayload.status === 'desc') return a[sortPayload.key] < b[sortPayload.key] ? 1 : -1;
+      else 0
+    });
+
+    setProducts(productsToSort, false);
+  };
+
   const searchByQuery = async (query: string) => {
     try {
       const { data } = await productsService.getAllBySearchQuery(query);
@@ -87,6 +118,26 @@ const useProducts = () => {
     } catch (err) {
       throw new Error('Error');
     } 
+  };
+
+  const setPaginationMetaFromRoute = () => {
+    const metaPaginationData: any = {};
+
+    Object.keys(route.query as unknown as ApiResponseMeta).forEach((key) => {
+      metaPaginationData[key] = Number(route.query[key]);
+    });
+
+    setPaginationMeta(metaPaginationData as ApiResponseMeta);
+  };
+
+  const syncMetaWithRouter = () => {
+    router.replace({
+      path: route.path,
+      query: {
+        ...route.query,
+        ...getPaginationMeta.value
+      },
+    });
   };
 
   const hasProducts = computed(() => !!state.products.length);
@@ -101,9 +152,15 @@ const useProducts = () => {
     total: getPaginationMeta.value.total,
   }));
 
+  watch(getPaginationMeta, () => {
+    syncMetaWithRouter();
+  });
+
   return {
     fetchInitialData,
     changePage,
+    changePageSize,
+    changeSorting,
     getProducts,
     selectCategory,
     getCategories,

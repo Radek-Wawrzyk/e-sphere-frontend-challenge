@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "format": "prettier .  --write"
   },
   "dependencies": {
     "@fontsource/open-sans": "^4.5.14",
@@ -28,6 +29,9 @@
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.7",
     "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/eslint-config-prettier": "^7.1.0",
+    "@vue/eslint-config-typescript": "^11.0.2",
+    "prettier": "^2.8.4",
     "typescript": "^4.9.3",
     "vite": "^4.1.0",
     "vue-tsc": "^1.0.24"

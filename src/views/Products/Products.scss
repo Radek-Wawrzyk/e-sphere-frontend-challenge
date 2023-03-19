@@ -19,7 +19,11 @@
     }
   }
 
-
+  &__sorting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   &__bottom {
     display: flex;
@@ -33,7 +37,7 @@
     }
 
     &-pagination {
-      // margin: 0 auto;
+      position: relative;
 
       &-wrapper {
         width: 100%;
