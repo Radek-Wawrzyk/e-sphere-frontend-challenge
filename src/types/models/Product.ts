@@ -23,6 +23,13 @@ interface ProductPaginationMeta {
   limit: number;
   skip: number;
   total: number;
+  q?: string;
 }
 
-export type { Product, ProductsSort, ProductPaginationMeta };
+interface ProductSearchMeta {
+  limit: number;
+  skip: number;
+  q: string;
+}
+
+export type { Product, ProductsSort, ProductPaginationMeta, ProductSearchMeta };

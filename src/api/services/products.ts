@@ -1,5 +1,6 @@
 import { httpInstance } from '@/api';
 import type { ApiProductsResponse, ApiProductsResponseMeta } from '@/types/models/Api';
+import type { ProductSearchMeta } from '@/types/models/Product';
 
 const productsService = {
   getAll: (meta: ApiProductsResponseMeta) => {
@@ -14,12 +15,14 @@ const productsService = {
     return httpInstance.get<ApiProductsResponse>(`/products/category/${category}`);
   },
   getAllCategories: () => {
-    return httpInstance.get('/products/categories/');
+    return httpInstance.get('/products/categories');
   },
-  getAllBySearchQuery: (searchQuery: string) => {
+  getAllBySearchQuery: (meta: ProductSearchMeta) => {
     return httpInstance.get<ApiProductsResponse>('/products/search', {
       params: {
-        q: searchQuery,
+        q: meta.q,
+        limit: meta.limit,
+        skip: meta.skip,
       },
     });
   },

@@ -76,6 +76,7 @@ const useProducts = () => {
   };
 
   const setPaginationMeta = (meta: ProductPaginationMeta) => {
+    console.log(meta);
     state.paginationMeta = meta;
     syncMetaWithRouter();
   };
@@ -105,15 +106,39 @@ const useProducts = () => {
     state.sortingMeta = sortPayload;
   };
 
-  const searchByQuery = async (query: string) => {
+  const searchByQuery = async (query?: string) => {
     try {
       let response: AxiosResponse<ApiProductsResponse>;
 
-      if (query.length) response = await productsService.getAllBySearchQuery(query);
-      else response = await productsService.getAll(PRODUCTS_DEFAULT_PAGINATION_META);
+      if (query && query.length) {
+        response = await productsService.getAllBySearchQuery({
+          limit: 100,
+          skip: 0,
+          q: query,
+        });
+
+        const { data } = response;
+
+        setPaginationMeta({
+          limit: data.limit,
+          total: data.total,
+          skip: data.skip,
+          q: query,
+        });
+
+        setProducts(data.products);
+        return;
+      }
+
+      response = await productsService.getAll(PRODUCTS_DEFAULT_PAGINATION_META);
       const { data } = response;
 
-      setPaginationMeta({ limit: data.limit, total: data.total, skip: data.skip });
+      setPaginationMeta({
+        limit: data.limit,
+        total: data.total,
+        skip: data.skip,
+      });
+
       setProducts(data.products);
     } catch (err) {
       throw new Error('Error');
@@ -124,18 +149,19 @@ const useProducts = () => {
     const metaPaginationData: any = {};
 
     Object.keys(route.query as unknown as ProductPaginationMeta).forEach((key) => {
-      metaPaginationData[key] = Number(route.query[key]);
+      metaPaginationData[key] = key == 'q' ? route.query[key] : Number(route.query[key]);
     });
 
     if (Object.keys(metaPaginationData).length)
       setPaginationMeta(metaPaginationData as ProductPaginationMeta);
+
+    console.log(getPaginationMeta.value);
   };
 
   const syncMetaWithRouter = () => {
     router.replace({
       path: route.path,
       query: {
-        ...route.query,
         ...getPaginationMeta.value,
       },
     });
@@ -146,6 +172,7 @@ const useProducts = () => {
   );
   const hasProducts = computed(() => !!state.products.length);
   const isLoading = computed(() => state.isLoading);
+  const isSearchMode = computed(() => !!getPaginationMeta.value.q);
 
   const getCategories = computed(() => state.categories);
   const getActiveCategory = computed(() => state.activeCategory);
@@ -194,9 +221,10 @@ const useProducts = () => {
     getProductsInfo,
     hasProducts,
     hasMorePages,
+    isLoading,
+    isSearchMode,
     fetchInitialData,
     searchByQuery,
-    isLoading,
   };
 };
 
