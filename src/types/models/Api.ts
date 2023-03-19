@@ -13,4 +13,9 @@ interface ApiProductsResponse extends ApiResponseMeta {
   products: Product[];
 }
 
-export type { ApiResponseMeta, ApiProductsResponse };
+interface ApiProductsResponseMeta {
+  limit: number;
+  skip: number;
+}
+
+export type { ApiResponseMeta, ApiProductsResponse, ApiProductsResponseMeta };

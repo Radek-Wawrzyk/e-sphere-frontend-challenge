@@ -1,12 +1,12 @@
 import { httpInstance } from '@/api';
-import type { ApiProductsResponse } from '@/types/models/Api';
+import type { ApiProductsResponse, ApiProductsResponseMeta } from '@/types/models/Api';
 
 const productsService = {
-  getAll: (payload: any) => {
+  getAll: (meta: ApiProductsResponseMeta) => {
     return httpInstance.get<ApiProductsResponse>('/products', {
       params: {
-        limit: payload.limit,
-        skip: payload.skip,
+        limit: meta.limit,
+        skip: meta.skip,
       }
     });
   },

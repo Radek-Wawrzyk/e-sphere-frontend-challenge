@@ -11,10 +11,24 @@ img {
   height: auto;
 }
 
+button, a {
+  cursor: pointer;
+
+  &:focus {
+    outline-color: var(--primary-color)   ;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: unset;
+  }
+}
+
 .container {
+  margin: 0 auto;
   padding: 0 2rem;
   width: 100%;
-  max-width: 1720px;
+  max-width: calc(1720px + 4rem);
 }
 
 .app {

@@ -33,7 +33,6 @@ export default defineComponent({
     AppInput,
     AppSelect,
   },
-  props: {},
   setup () {
     const { getCategories, selectCategory, searchByQuery } = useProducts();
     const searchQuery = ref('');

@@ -5,6 +5,13 @@
     position: relative;
     margin: 0 0 40px 0;
 
+    &-line {
+      margin: 32px 0 12px 0;
+      height: 1px;
+      width: 100%;
+      background-color: var(--ui-border-color);
+    }
+
     &-title {
       margin: 0 0 40px 0;
       font-size: 1.6875rem;
@@ -12,8 +19,28 @@
     }
   }
 
-  &__select {
-    width: 85px;
+
+
+  &__bottom {
+    display: flex;
+    align-items: center;
+    width: 100%;
     margin: 48px 0 0 0;
+
+    &-select {
+      width: 85px;
+      min-width: 85px;
+    }
+
+    &-pagination {
+      // margin: 0 auto;
+
+      &-wrapper {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
   }
 }
