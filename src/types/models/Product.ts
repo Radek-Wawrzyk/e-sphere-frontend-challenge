@@ -19,4 +19,10 @@ interface ProductsSort {
   status: ProductsSortStatus;
 }
 
-export type { Product, ProductsSort };
+interface ProductPaginationMeta {
+  limit: number;
+  skip: number;
+  total: number;
+}
+
+export type { Product, ProductsSort, ProductPaginationMeta };

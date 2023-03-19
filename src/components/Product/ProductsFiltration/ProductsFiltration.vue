@@ -34,12 +34,12 @@ export default defineComponent({
     AppSelect,
   },
   setup() {
-    const { getCategories, selectCategory, searchByQuery } = useProducts();
+    const { getCategories, changeCategory, searchByQuery } = useProducts();
     const searchQuery = ref('');
     const category = ref('');
 
     watch(category, () => {
-      selectCategory(category.value);
+      changeCategory(category.value);
     });
 
     watch(searchQuery, () => {
