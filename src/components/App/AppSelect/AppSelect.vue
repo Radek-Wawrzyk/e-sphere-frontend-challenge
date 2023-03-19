@@ -12,12 +12,11 @@
       @click="setSelectActiveStatus()"
     >
       {{ selectText }}
-
-      <img 
+  
+      <font-awesome-icon 
+        icon="sort-down"
         class="app-select__trigger-icon"
         :class="{'app-select__trigger-icon--is-active' : isActive }" 
-        alt="" 
-        src="@/assets/icons/arrow-down.svg"
       />
     </button>
 
