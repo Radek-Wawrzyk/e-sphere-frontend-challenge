@@ -1,18 +1,105 @@
-# Vue 3 + TypeScript + Vite
+# E-Sphere Frontend Challenge
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This repository contains the codebase for the e-sphere-frontend-challenge, a recruitment task for a senior front-end developer position at E-Sphere.
 
-## Recommended IDE Setup
+## Getting Started
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+To get started with the project, follow these steps:
 
-## Type Support For `.vue` Imports in TS
+1)Clone the repository to your local machine
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+```bash
+git clone https://github.com/Radek-Wawrzyk/e-sphere-frontend-challenge.git
+```
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+2)Install dependencies
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+```bash
+cd e-sphere-frontend-challenge
+yarn
+```
+
+3)Start the development server:
+
+```bash
+yarn dev
+```
+
+## Project structure
+
+The project is structured as follows:
+
+```php
+
+├── index.html               # Main entry point of the application
+├── .env                     # Local ENV file
+├── .env.example             # Example of target ENV file
+├── .eslintrc.cjs            # Main Eslint config
+├── .prettierrc              # Main Prettier config
+├── tsconfig.json            # Main TypeScript config file
+├── vite.config.ts           # Main Vire config file
+├── public/                  # Public assets
+│   ├── vite.svg             # Favicon 
+└── src/                     # Source code
+    ├── assets/              # Static assets (images, fonts, etc.)
+    ├── components/          # Reusable components
+    │   ├── App/             # Main app related components
+    │   └── Product/         # Product related components
+    ├── views/               # Page components
+    ├── router/              # Vue Router configuration
+    ├── composables/         # Vue3 reused logic files
+    ├── styles/              # Global SCSS styles
+    ├── helpers/             # Application utils functions
+    ├── plugins/             # 3rd parties plugins
+    ├── types/               # Typescript types directory
+    │   ├── constants/       # JavaScript application related constants
+    │   ├── enums/           # TypeScript enums
+    │   ├── models/          # TypeScript interfaces (for bigger objects)
+    │   ├── types/           # TypeScript native types
+    ├── api/                 # Api directory
+    │   └── services/        # All axios services
+    ├── main.ts              # The main entry point
+    ├── App.vue              # The root Vue component
+```
+
+## Technologies & libraries I used
+
+The project uses the following technologies/libraries:
+
+- Vue3
+  
+- Vue-Router
+  
+- Vite
+  
+- Sass (SCSS)
+  
+- TypeScript
+  
+- Axios
+  
+- FontAwesome
+  
+- Lodash.debounce
+  
+- Eslint + Prettier
+  
+- FontSource (Google fonts as NPM packages)
+  
+
+## Architecture with a quick summary of made decisions
+
+The project follows a component based architecture, where each component is a self-contained unit that can be easily reused across the application. Moreover, I decided to create `useProducts()` composable, which is responsible for all product-related views and "actions". By this solution I keep all logic in one file (without additional store libraries like `Pinia` or `Vuex`).
+
+Moreover, I decided to keep all `enums/constants/interfaces/types` in one main directory called `types`. By this solution application keeps all typed-related logic in one place and it's easy to find and maitain in the future.
+
+What is more, I decided to split components into 2 main categories:
+
+- `App/*` - Application base related components, such as `AppInput` or `AppSelect.vue` . All components contains `App` prefix for easier looking and searching.
+  
+- `Product/*` - Product related components, defined by its own scope of the product or products with `Product` prefix. Moreover, same as aboved - all componets contains `Product` or `Products` prefix
+  
+
+In the terms of API, I decided to create `api` directory, which contains main `axios instance`, which is being used in all services. Right now there is only one service, however, it could be very easy to expand or maintain more services in the future.
+
+Last thing worth to mention is plugins directory. I decided to use `font-awesome` for all icons as I cound't import them from the provided `Adobe XD page`. Therefore, I created one plugin called ` font-awesome.ts` and I imported only 3 neccessary icons + `vue` component.
