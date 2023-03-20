@@ -48,3 +48,34 @@
     }
   }
 }
+
+// Media
+
+@media screen and (max-width: 768px) {
+  .products-page {
+    &__header {
+      &-filters {
+        flex-direction: column;
+      }
+    }
+
+    &__sorting {
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    &__bottom {
+      flex-direction: column;
+      gap: 16px;
+
+      &-pagination-wrapper {
+        order: 1;
+      }
+
+      &-select {
+        order: 2;
+        width: 100%;
+      }
+    }
+  }
+}

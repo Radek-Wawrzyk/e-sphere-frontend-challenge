@@ -4,8 +4,10 @@
   border: 1px solid var(--ui-border-color);
   border-radius: var(--ui-border-radius);
 
+  --product-card__image-height: 150px;
+
   &__thumbnail {
-    height: 150px;
+    height: var(--product-card__image-height);
     width: 100%;
 
     &-image {
@@ -17,7 +19,7 @@
 
   &__content {
     padding: 1rem;
-    height: calc(100% - 150px);
+    height: calc(100% - var(--product-card__image-height));
     display: flex;
     flex-wrap: wrap;
 
@@ -43,5 +45,13 @@
     justify-content: space-between;
     margin: 13px 0 0 0;
     gap: 1rem;
+  }
+}
+
+// Media
+
+@media screen and (max-width: 576px) {
+  .product-card {
+    --product-card__image-height: 50vw;
   }
 }

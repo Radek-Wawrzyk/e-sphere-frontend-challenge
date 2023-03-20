@@ -13,4 +13,16 @@
   }
 }
 
-//
+// Media
+
+@media screen and (max-width: 768px) {
+  .products-filtration {
+    gap: 24px;
+
+    &__search, &__category {
+      width: 100%;
+      max-width: 100%;
+      
+    }
+  }
+}
