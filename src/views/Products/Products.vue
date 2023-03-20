@@ -50,7 +50,6 @@ import ProductsListing from '@/components/Product/ProductsListing/ProductsListin
 import ProductsSorting from '@/components/Product/ProductsSorting/ProductsSorting.vue';
 import AppSelect from '@/components/App/AppSelect/AppSelect.vue';
 import AppPagination from '@/components/App/AppPagination/AppPagination.vue';
-import Test from '@/components/Product/test.vue';
 
 export default defineComponent({
   name: 'ProductsView',
@@ -60,7 +59,6 @@ export default defineComponent({
     ProductsSorting,
     AppSelect,
     AppPagination,
-    Test,
   },
   setup() {
     const {
