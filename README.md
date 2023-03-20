@@ -6,20 +6,20 @@ This repository contains the codebase for the e-sphere-frontend-challenge, a rec
 
 To get started with the project, follow these steps:
 
-1)Clone the repository to your local machine
+1. Clone the repository to your local machine
 
 ```bash
 git clone https://github.com/Radek-Wawrzyk/e-sphere-frontend-challenge.git
 ```
 
-2)Install dependencies
+2. Install dependencies
 
 ```bash
 cd e-sphere-frontend-challenge
 yarn
 ```
 
-3)Start the development server:
+3. Start the development server:
 
 ```bash
 yarn dev
@@ -95,11 +95,11 @@ Moreover, I decided to keep all `enums/constants/interfaces/types` in one main d
 
 What is more, I decided to split components into 2 main categories:
 
-- `App/*` - Application base related components, such as `AppInput` or `AppSelect.vue` . All components contains `App` prefix for easier looking and searching.
+- `App/*` - Application base related components, such as `AppInput` or `AppSelect.vue` . All components contain `App` prefix for easier navigation through the project.
   
-- `Product/*` - Product related components, defined by its own scope of the product or products with `Product` prefix. Moreover, same as aboved - all componets contains `Product` or `Products` prefix
+- `Product/*` - Product related components, defined by its own scope of the product or products with `Product` prefix. Moreover, same as above - all componets contain `Product` or `Products` prefixes.
   
 
-In the terms of API, I decided to create `api` directory, which contains main `axios instance`, which is being used in all services. Right now there is only one service, however, it could be very easy to expand or maintain more services in the future.
+In the terms of API, I decided to create `api` directory, which contains main `axios instance`, which is being used in all services. Right now there is only one service, however, it would be very easy to expand or maintain more services in the future.
 
-Last thing worth to mention is plugins directory. I decided to use `font-awesome` for all icons as I cound't import them from the provided `Adobe XD page`. Therefore, I created one plugin called ` font-awesome.ts` and I imported only 3 neccessary icons + `vue` component.
+Last thing worth to mention is the `plugins` directory. I decided to use `font-awesome` for all icons as I cound't import them from the provided `Adobe XD page`. Therefore, I created one plugin called `font-awesome.ts` and I imported only 3 neccessary icons + `vue` component.
