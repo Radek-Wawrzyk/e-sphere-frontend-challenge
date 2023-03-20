@@ -1,26 +1,28 @@
 <template>
   <div class="products-filtration">
     <app-input
-      v-model="searchQuery"
+      :model-value="getSearchQuery"
       label="Search:"
       title="Search any product"
       placeholder="What are you looking for?"
       class="products-filtration__search"
+      @update:model-value="search($event)"
     />
 
     <app-select
-      v-model="category"
+      :model-value="getActiveCategory"
       label="Category:"
       :options="getCategories"
       title="Select a product category"
       placeholder="Select category"
       class="products-filtration__category"
+      @update:model-value="setCategory($event)"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent } from 'vue';
 import { useProducts } from '@/composables/useProducts';
 import debounce from 'lodash.debounce';
 
@@ -34,26 +36,27 @@ export default defineComponent({
     AppSelect,
   },
   setup() {
-    const { getCategories, setCategory, searchByQuery } = useProducts();
-    const searchQuery = ref('');
-    const category = ref('');
+    const {
+      getCategories,
+      getSearchQuery,
+      setCategory,
+      setQuery,
+      searchByQuery,
+      getActiveCategory,
+    } = useProducts();
 
-    watch(category, () => {
-      setCategory(category.value);
-    });
-
-    watch(searchQuery, () => {
-      search();
-    });
-
-    const search = debounce(() => {
-      searchByQuery(searchQuery.value);
-    }, 500);
+    const search = debounce((query: string) => {
+      setQuery(query);
+      searchByQuery(query);
+    }, 800);
 
     return {
-      searchQuery,
-      category,
+      search,
       getCategories,
+      getActiveCategory,
+      setCategory,
+      setQuery,
+      getSearchQuery,
     };
   },
 });

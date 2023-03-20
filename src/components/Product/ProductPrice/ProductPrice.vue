@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
-import { getFormattedPrice } from '@/helpers/';
+import { getFormattedPrice, getPriceAfterDiscount } from '@/helpers/';
 
 export default defineComponent({
   name: 'ProductPrice',
@@ -33,7 +33,7 @@ export default defineComponent({
   },
   setup(props) {
     const priceAfterDiscount = computed(() =>
-      getFormattedPrice(props.price - props.price * (props.discountPercentage / 100))
+      getFormattedPrice(getPriceAfterDiscount(props.price, props.discountPercentage))
     );
     const normalPrice = computed(() => getFormattedPrice(props.price));
     const hasDiscount = computed(() => props.discountPercentage > 0);

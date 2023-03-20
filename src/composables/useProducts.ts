@@ -9,20 +9,21 @@ import { useRoute, useRouter } from 'vue-router';
 import { getPriceAfterDiscount } from '@/helpers';
 import { ApiProductsResponse } from '@/types/models/Api';
 import { AxiosResponse } from 'axios';
+import { useLoader } from './useLoader';
 
 const state = reactive({
   products: <Product[]>[],
-  productsCopy: <Product[]>[],
   categories: <string[]>[],
-  isLoading: false,
   activeCategory: '',
   paginationMeta: PRODUCTS_DEFAULT_PAGINATION_META,
   sortingMeta: PRODUCTS_DEFAULT_SORT_META,
+  query: '',
 });
 
 const useProducts = () => {
   const router = useRouter();
   const route = useRoute();
+  const { setLoader } = useLoader();
 
   const fetchProductCategories = async (): Promise<string[]> => {
     try {
@@ -33,7 +34,9 @@ const useProducts = () => {
     }
   };
 
-  const fetchProducts = async (): Promise<Product[]> => {
+  const fetchProducts = async (loader = false): Promise<Product[]> => {
+    if (loader) setLoader(true);
+
     try {
       const { data } = await productsService.getAll({
         limit: getPaginationMeta.value.limit,
@@ -44,10 +47,14 @@ const useProducts = () => {
       return data.products;
     } catch (err) {
       throw new Error('Error');
+    } finally {
+      if (loader) setLoader(false);
     }
   };
 
-  const fetchProductsByCategory = async () => {
+  const fetchProductsByCategory = async (loader = false) => {
+    if (loader) setLoader(true);
+
     try {
       const { data } = await productsService.getAllByCategory(state.activeCategory);
 
@@ -55,19 +62,22 @@ const useProducts = () => {
       setProducts(data.products);
     } catch (err) {
       throw new Error('Error');
+    } finally {
+      if (loader) setLoader(false);
     }
   };
 
   const fetchInitialData = async () => {
     setPaginationMetaFromRoute();
+    setLoader(true);
     const [categories, products] = await Promise.all([fetchProductCategories(), fetchProducts()]);
 
     setCategories(categories);
     setProducts(products);
+    setLoader(false);
   };
 
-  const setProducts = (products: Product[], clone = true) => {
-    if (clone) state.productsCopy = products;
+  const setProducts = (products: Product[]) => {
     state.products = products;
   };
 
@@ -76,7 +86,6 @@ const useProducts = () => {
   };
 
   const setPaginationMeta = (meta: ProductPaginationMeta) => {
-    console.log(meta);
     state.paginationMeta = meta;
     syncMetaWithRouter();
   };
@@ -84,22 +93,22 @@ const useProducts = () => {
   const setCategory = async (category: string) => {
     if (category.length) {
       state.activeCategory = category;
-      fetchProductsByCategory();
+      fetchProductsByCategory(true);
       return;
     }
 
     setPaginationMeta(PRODUCTS_DEFAULT_PAGINATION_META);
-    setProducts(await fetchProducts());
+    setProducts(await fetchProducts(true));
   };
 
   const setPage = async (skip: number) => {
     setPaginationMeta({ ...getPaginationMeta.value, skip });
-    setProducts(await fetchProducts());
+    setProducts(await fetchProducts(true));
   };
 
   const setPageSize = async (limit: string) => {
     setPaginationMeta({ ...getPaginationMeta.value, limit: Number(limit) });
-    setProducts(await fetchProducts());
+    setProducts(await fetchProducts(true));
   };
 
   const setSorting = (sortPayload: ProductsSort) => {
@@ -107,6 +116,8 @@ const useProducts = () => {
   };
 
   const searchByQuery = async (query?: string) => {
+    setLoader(true);
+
     try {
       let response: AxiosResponse<ApiProductsResponse>;
 
@@ -142,6 +153,8 @@ const useProducts = () => {
       setProducts(data.products);
     } catch (err) {
       throw new Error('Error');
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -154,8 +167,10 @@ const useProducts = () => {
 
     if (Object.keys(metaPaginationData).length)
       setPaginationMeta(metaPaginationData as ProductPaginationMeta);
+  };
 
-    console.log(getPaginationMeta.value);
+  const setQuery = (query: string) => {
+    state.query = query;
   };
 
   const syncMetaWithRouter = () => {
@@ -171,10 +186,10 @@ const useProducts = () => {
     () => getPaginationMeta.value.total / getPaginationMeta.value.limit > 1
   );
   const hasProducts = computed(() => !!state.products.length);
-  const isLoading = computed(() => state.isLoading);
   const isSearchMode = computed(() => !!getPaginationMeta.value.q);
 
   const getCategories = computed(() => state.categories);
+  const getSearchQuery = computed(() => state.query);
   const getActiveCategory = computed(() => state.activeCategory);
   const getPaginationMeta = computed(() => state.paginationMeta);
   const getSortingMeta = computed(() => state.sortingMeta);
@@ -214,14 +229,15 @@ const useProducts = () => {
     setPageSize,
     setSorting,
     setCategory,
+    setQuery,
     getProducts,
+    getSearchQuery,
     getCategories,
     getActiveCategory,
     getPaginationMeta,
     getProductsInfo,
     hasProducts,
     hasMorePages,
-    isLoading,
     isSearchMode,
     fetchInitialData,
     searchByQuery,

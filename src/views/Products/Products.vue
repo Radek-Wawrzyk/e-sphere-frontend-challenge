@@ -1,5 +1,5 @@
 <template>
-  <div class="products-page">
+  <div v-if="!isLoading" class="products-page">
     <div class="container">
       <header class="products-page__header">
         <h1 class="products-page__header-title">Front End Challenge</h1>
@@ -50,6 +50,7 @@ import ProductsListing from '@/components/Product/ProductsListing/ProductsListin
 import ProductsSorting from '@/components/Product/ProductsSorting/ProductsSorting.vue';
 import AppSelect from '@/components/App/AppSelect/AppSelect.vue';
 import AppPagination from '@/components/App/AppPagination/AppPagination.vue';
+import { useLoader } from '@/composables/useLoader';
 
 export default defineComponent({
   name: 'ProductsView',
@@ -72,6 +73,7 @@ export default defineComponent({
       hasMorePages,
       isSearchMode,
     } = useProducts();
+    const { isLoading } = useLoader();
 
     const resultsText = computed(
       () => `${getProductsInfo.value.current} of ${getProductsInfo.value.total} results`
@@ -93,6 +95,7 @@ export default defineComponent({
       setSorting,
       setPage,
       isSearchMode,
+      isLoading,
     };
   },
 });

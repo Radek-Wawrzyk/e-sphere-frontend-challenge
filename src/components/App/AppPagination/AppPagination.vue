@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts">
+import { PAGINATION_MAX_VISIBLE_PAGES } from '@/types/constants/Pagination';
 import { computed, defineComponent, PropType } from 'vue';
 
 export default defineComponent({
@@ -49,8 +50,8 @@ export default defineComponent({
     const totalPages = computed(() => Math.ceil(props.total / props.limit));
 
     const pages = computed(() => {
-      const maxVisiblePages = 5;
-      const pages = [];
+      const maxVisiblePages = PAGINATION_MAX_VISIBLE_PAGES;
+      const pages: number[] = [];
 
       let start = currentPage.value - 2;
       let end = currentPage.value + 2;
