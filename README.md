@@ -87,7 +87,7 @@ The project uses the following technologies/libraries:
 - FontSource (Google fonts as NPM packages)
   
 
-## Architecture with a quick summary of made decisions
+## Architecture with a quick summary
 
 The project follows a component based architecture, where each component is a self-contained unit that can be easily reused across the application. Moreover, I decided to create `useProducts()` composable, which is responsible for all product-related views and "actions". By this solution I keep all logic in one file (without additional store libraries like `Pinia` or `Vuex`).
 
