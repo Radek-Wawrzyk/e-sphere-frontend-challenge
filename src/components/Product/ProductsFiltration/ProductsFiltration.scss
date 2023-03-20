@@ -19,10 +19,10 @@
   .products-filtration {
     gap: 24px;
 
-    &__search, &__category {
+    &__search,
+    &__category {
       width: 100%;
       max-width: 100%;
-      
     }
   }
 }

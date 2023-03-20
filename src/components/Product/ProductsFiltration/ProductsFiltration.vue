@@ -24,6 +24,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useProducts } from '@/composables/useProducts';
+import { SEARCH_DEBONCE_TIMING } from '@/types/constants/Search';
 import debounce from 'lodash.debounce';
 
 import AppInput from '@/components/App/AppInput/AppInput.vue';
@@ -48,7 +49,7 @@ export default defineComponent({
     const search = debounce((query: string) => {
       setQuery(query);
       searchByQuery(query);
-    }, 800);
+    }, SEARCH_DEBONCE_TIMING);
 
     return {
       search,

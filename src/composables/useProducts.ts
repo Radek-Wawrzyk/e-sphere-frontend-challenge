@@ -25,16 +25,16 @@ const useProducts = () => {
   const route = useRoute();
   const { setLoader } = useLoader();
 
-  const fetchProductCategories = async (): Promise<string[]> => {
+  const fetchProductCategories = async (): Promise<void> => {
     try {
       const response = await productsService.getAllCategories();
-      return response.data;
+      setCategories(response.data);
     } catch (error) {
       throw new Error('Error');
     }
   };
 
-  const fetchProducts = async (loader = false): Promise<Product[]> => {
+  const fetchProducts = async (loader = false): Promise<void> => {
     if (loader) setLoader(true);
 
     try {
@@ -44,7 +44,7 @@ const useProducts = () => {
       });
 
       setPaginationMeta({ limit: data.limit, total: data.total, skip: data.skip });
-      return data.products;
+      setProducts(data.products);
     } catch (err) {
       throw new Error('Error');
     } finally {
@@ -70,11 +70,14 @@ const useProducts = () => {
   const fetchInitialData = async () => {
     setPaginationMetaFromRoute();
     setLoader(true);
-    const [categories, products] = await Promise.all([fetchProductCategories(), fetchProducts()]);
 
-    setCategories(categories);
-    setProducts(products);
-    setLoader(false);
+    try {
+      await Promise.all([fetchProductCategories(), fetchProducts()]);
+    } catch (err) {
+      console.log('Error');
+    } finally {
+      setLoader(false);
+    }
   };
 
   const setProducts = (products: Product[]) => {
@@ -98,17 +101,17 @@ const useProducts = () => {
     }
 
     setPaginationMeta(PRODUCTS_DEFAULT_PAGINATION_META);
-    setProducts(await fetchProducts(true));
+    await fetchProducts(true);
   };
 
   const setPage = async (skip: number) => {
     setPaginationMeta({ ...getPaginationMeta.value, skip });
-    setProducts(await fetchProducts(true));
+    await fetchProducts(true);
   };
 
   const setPageSize = async (limit: string) => {
     setPaginationMeta({ ...getPaginationMeta.value, limit: Number(limit) });
-    setProducts(await fetchProducts(true));
+    await fetchProducts(true);
   };
 
   const setSorting = (sortPayload: ProductsSort) => {
